@@ -5,25 +5,17 @@ function useSort(items: any[]): [any[], any, any] {
 	
 	const sortedItems = useMemo(() => {
 		if (sortBy === 'DESC') {
-			return items;
+			return [...items].sort((a,b) => b.id - a.id);
 		}
 		
 		if (sortBy === 'ASC') {
-			return items.sort((a, b) => b.id - a.id)
+			return [...items].sort((a, b) => b.id - a.id)
 		}
 		
 		return items;
 	}, [items, sortBy]);
 	
-	const handleSortClick = () => {
-		if (sortBy === 'ASC') {
-			setSortBy('DESC');
-		} else if (sortBy === 'DESC') {
-			setSortBy('ASC');
-		} else {
-			setSortBy('');
-		}
-	}
+	const handleSortClick = () => setSortBy(prev => (prev === 'ASC' ? 'DESK' : 'ASC'))
 	
 	return [sortedItems, sortBy, handleSortClick]
 }
