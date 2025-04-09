@@ -3,7 +3,15 @@ import { Link } from 'react-router-dom';
 import Button from './Button';
 
 
-const ListItem: React.FC<any> = ({ id, name, description, onClick, isactive }) => {
+interface ListItemProps {
+  id: string | number;
+  name: string;
+  description: string;
+  onClick: (id: string | number) => void;
+  isactive: boolean;
+}
+
+const ListItem: React.FC<ListItemProps> = ({ id, name, description, onClick, isactive }) => {
   
   const handleItemClick = () => onClick(id);
 

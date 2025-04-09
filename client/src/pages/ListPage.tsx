@@ -3,7 +3,13 @@ import { ListItem } from './components';
 import useData from './useData';
 import useSort from './useSort';
 
-const SubTitle: React.FC<any> = ({children}) => (
+interface Item {
+    id:number;
+    name:string;
+    description:string;
+}
+
+const SubTitle: React.FC<{children: string | number}> = ({children}) => (
     <h2 className={'list-subtitle'}>Active Item ID: {children}</h2>
 )
 
@@ -13,12 +19,12 @@ function ListPage() {
     const [sortedItems, sortBy, handleSortClick] = useSort(items);
 
     const [query, setQuery] = useState<string>('');
-    const [activeItemId,  setActiveItemId] = useState<any>(null);
-    const [filteredItems, setFilteredItems] = useState<any[]>([]);
+    const [activeItemId,  setActiveItemId] = useState<number | null>(null);
+    const [filteredItems, setFilteredItems] = useState<Item[]>([]);
     
     const activeItemText = useMemo(() => activeItemId ? activeItemId : 'Empty', [activeItemId]);
     
-  const handleItemClick = (id: any) => {
+  const handleItemClick = (id: number) => {
     setActiveItemId(id);
   };
   

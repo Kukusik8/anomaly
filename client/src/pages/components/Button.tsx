@@ -1,6 +1,13 @@
 import React, { memo, useCallback } from 'react';
 
-const Button: React.FC<any> = ({ onClick, id, disabled, children }) => {
+interface ButtonProps {
+	onClick: (id: string | number) => void;
+	id: string | number;
+	disabled?: boolean;
+	children: React.ReactNode;
+  }
+
+const Button: React.FC<ButtonProps> = ({ onClick, id, disabled, children }) => {
 	const handleClick = useCallback(() => {
 		onClick(id);
 	}, [onClick, id]);

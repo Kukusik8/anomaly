@@ -1,7 +1,13 @@
 import { useMemo, useState } from 'react';
 
-function useSort(items: any[]): [any[], any, any] {
-	const [sortBy, setSortBy] = useState('ASC');
+type SortTo = 'ASC' | 'DESC'
+
+interface Sortable {
+	id:number
+}
+
+function useSort<T extends Sortable>(items: T[]): [T[], SortTo, () => void] {
+	const [sortBy, setSortBy] = useState<SortTo>('ASC');
 	
 	const sortedItems = useMemo(() => {
 		if (sortBy === 'DESC') {
