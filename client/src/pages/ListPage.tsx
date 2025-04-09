@@ -8,12 +8,13 @@ const SubTitle: React.FC<any> = ({children}) => (
 )
 
 function ListPage() {
-    const items = useData();
+
+    const {items, loading, isRefreshing} = useData();
     const [sortedItems, sortBy, handleSortClick] = useSort(items);
-    
+
+    const [query, setQuery] = useState<string>('');
     const [activeItemId,  setActiveItemId] = useState<any>(null);
     const [filteredItems, setFilteredItems] = useState<any[]>([]);
-    const [query, setQuery] = useState<string>('');
     
     const activeItemText = useMemo(() => activeItemId ? activeItemId : 'Empty', [activeItemId]);
     
@@ -35,11 +36,18 @@ function ListPage() {
         }
     }, [query, filteredItems]);
 
+
+    if(loading) {
+        return <div>Loading...</div>
+    }
   return (
     <div className={'list-wrapper'}>
         <div className="list-header">
             <h1 className={'list-title'}>Items List</h1>
             <SubTitle>{activeItemText}</SubTitle>
+
+            {isRefreshing && <div className='refreshing-indicator'>Refreshing data...</div>}
+
             <button onClick={handleSortClick}>Sort ({sortBy === 'ASC' ? 'ASC' : 'DESC'})</button>
             <input type="text" placeholder={'Filter by ID'} value={query} onChange={handleQueryChange} />
         </div>
