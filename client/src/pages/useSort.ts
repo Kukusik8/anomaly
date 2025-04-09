@@ -9,13 +9,13 @@ function useSort(items: any[]): [any[], any, any] {
 		}
 		
 		if (sortBy === 'ASC') {
-			return [...items].sort((a, b) => b.id - a.id)
+			return [...items].sort((a, b) => a.id - b.id)
 		}
 		
 		return items;
 	}, [items, sortBy]);
 	
-	const handleSortClick = () => setSortBy(prev => (prev === 'ASC' ? 'DESK' : 'ASC'))
+	const handleSortClick = () => setSortBy(prev => (prev === 'ASC' ? 'DESC' : 'ASC'))
 	
 	return [sortedItems, sortBy, handleSortClick]
 }
