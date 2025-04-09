@@ -27,36 +27,34 @@ function ListPage() {
   }
     
     useEffect(() => {
-        setFilteredItems(sortedItems);
-    }, [sortedItems]);
-  
-    useEffect(() => {
-        if (query.length > 0) {
-            setFilteredItems(filteredItems.filter(item => `${item.id}`.includes(query.toLowerCase().trimStart().trimEnd().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))));
+        if(query.length > 0) {
+            setFilteredItems(sortedItems.filter((item) => String(item.id).includes(query.trim())))
         }
-    }, [query, filteredItems]);
+        else {
+            setFilteredItems(sortedItems)
+        }
+    },[query, sortedItems])
 
 
     if(loading) {
         return <div>Loading...</div>
     }
+
   return (
     <div className={'list-wrapper'}>
         <div className="list-header">
             <h1 className={'list-title'}>Items List</h1>
             <SubTitle>{activeItemText}</SubTitle>
-
             {isRefreshing && <div className='refreshing-indicator'>Refreshing data...</div>}
-
             <button onClick={handleSortClick}>Sort ({sortBy === 'ASC' ? 'ASC' : 'DESC'})</button>
             <input type="text" placeholder={'Filter by ID'} value={query} onChange={handleQueryChange} />
         </div>
         <div className="list-container">
             <div className="list">
-                {filteredItems.length === 0 && <span>Loading...</span>}
+                {filteredItems.length === 0 && <span>No items found</span>}
                 {filteredItems.map((item, index) => (
                     <ListItem
-                        key={index}
+                        key={item.id}
                         isactive={activeItemId===item.id}
                         id={item.id}
                         name={item.name}
